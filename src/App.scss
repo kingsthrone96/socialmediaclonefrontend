@@ -1,0 +1,30 @@
+$primary-color: #2196f3;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.btn {
+  margin-top: 30px;
+  padding: 15px 50px;
+  border: 2px #fff solid;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 100ms;
+  text-decoration: none;
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover {
+    background-color: darken($color: $primary-color, $amount: 5);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}

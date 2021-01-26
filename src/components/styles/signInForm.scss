@@ -1,0 +1,67 @@
+@import "../../App.scss";
+
+#signInForm {
+  display: flex;
+
+  #pageGreetings {
+    width: 60vw;
+    height: 100vh;
+    color: #fff;
+    background-color: $primary-color;
+
+    #pageGreetingContent {
+      width: 90%;
+      margin: auto;
+      position: relative;
+      top: 45%;
+      transform: translateY(-50%);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+
+      h1 {
+        font-size: 3.5em;
+      }
+
+      p {
+        margin-top: 30px;
+        font-size: 1.3em;
+        line-height: 1.7;
+        font-weight: 300;
+      }
+
+      #pageGreetingContentBtn {
+        background: transparent;
+        color: #fff;
+      }
+    }
+  }
+
+  #pageForm {
+    width: 40vw;
+    height: 100vh;
+
+    form {
+      width: 70%;
+      margin: 100px auto;
+
+      h1 {
+        margin-bottom: 50px;
+        font-size: 2em;
+        color: #4b4b4b;
+        text-align: center;
+      }
+
+      .form-fields {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      #signUpBtn {
+        margin-top: 10px;
+        background-color: $primary-color;
+        color: #fff;
+        width: fit-content;
+      }
+    }
+  }
+}
