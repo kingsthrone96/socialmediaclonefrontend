@@ -1,38 +1,40 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+
 import "./styles/signUpForm.scss";
-import { Link } from "react-router-dom";
 import serverAPI from "../serverAPI";
+import UseAuth from './customHooks/UseAuth';
+
 import TextField from "@material-ui/core/TextField";
 
-function SignUpForm({ userState, setUserState }) {
-  const [formBody, setFormBody] = useState();
-  const [errors, setErrors] = useState();
 
+
+let body = {}
+const onChange = (e = window.event) => {
+  const { name, value } = e.target;
+  Object.assign(body, { ...body, [name]: value});
+};
+
+function SignUpForm({ userState, setUserState }) {
+  const isLoggedIn = UseAuth();
   const [nameError, setNameError] = useState();
   const [emailError, setEmailError] = useState();
   const [passwordError, setPasswordError] = useState();
 
-  const onChange = (e = window.event) => {
-    const { name, value } = e.target;
-    setFormBody((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await fetch(serverAPI.userCreate, {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify(formBody),
+        body: JSON.stringify(body)
       });
       const resData = await res.json();
       if (resData.clientError) {
-        setErrors(resData.clientError);
+
         handleValidationError(resData.clientError);
         console.log(resData);
-        throw new Error();
+        throw new Error("Something went wrong");
       } else {
         setUserState(resData);
         console.log(resData);
@@ -57,6 +59,8 @@ function SignUpForm({ userState, setUserState }) {
         setPasswordError({ error: true, errMsg });
     });
   };
+
+  if(isLoggedIn) return <Redirect to="/homefeed" />;
   return (
     <div id="signUpForm">
       <div id="pageGreetings">
