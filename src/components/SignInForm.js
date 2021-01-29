@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, Redirect } from 'react-router-dom';
 
 import "./styles/signInForm.scss";
-import serverAPI from "../serverAPI";
+import serverAPI from "./helpers/serverAPI";
 import UseAuth from './customHooks/UseAuth';
 
 import TextField from "@material-ui/core/TextField";

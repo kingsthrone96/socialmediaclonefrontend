@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import {Redirect } from 'react-router-dom';
 
-import serverAPI from '../serverAPI';
+import './styles/homefeed.scss';
+import serverAPI from './helpers/serverAPI';
 import UseAuth from './customHooks/UseAuth';
-import { fetchData } from './helpersFunctions';
+import { fetchData } from './helpers/helpersFunctions';
+
+import Navbar from './Navbar';
 
 function Homefeed({ currentUser, setUserState }) {
    const loggedIn = UseAuth();
@@ -29,7 +32,14 @@ function Homefeed({ currentUser, setUserState }) {
    }, [setUserState]);
 
    if(!isLoggedIn) return <Redirect to="/signIn" />;
-   return <h1>Welcome to Homefeed {currentUser.name}</h1>;
+   return (
+      <>
+         <Navbar />
+         <div id="homefeed" className="container">
+            <h1>Welcome to homefeed {currentUser.name}</h1>
+         </div>
+      </>
+   )
    
 }
 

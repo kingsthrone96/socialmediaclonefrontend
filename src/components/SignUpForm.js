@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 import "./styles/signUpForm.scss";
-import serverAPI from "../serverAPI";
+import serverAPI from "./helpers/serverAPI";
 import UseAuth from './customHooks/UseAuth';
 
 import TextField from "@material-ui/core/TextField";
@@ -31,7 +31,6 @@ function SignUpForm({ userState, setUserState }) {
       });
       const resData = await res.json();
       if (resData.clientError) {
-
         handleValidationError(resData.clientError);
         console.log(resData);
         throw new Error("Something went wrong");
