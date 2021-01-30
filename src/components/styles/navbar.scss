@@ -1,34 +1,35 @@
+@import "../../App.scss";
+
 #navbar {
-   position: fixed;
-   width: 100vw;
-   background-color: #00796b;
-   padding: 15px 0;
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  background-color: $primary-color;
+  z-index: 1;
 
-   .container {
+  .hc-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    #brandLogo > #logo {
+      text-decoration: none;
+      font-size: 1.5em;
+      color: #fff;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    #navLinks {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      width: fit-content;
 
-      #brandLogo > #logo {
-         text-decoration: none;
-         font-size: 1.8em;
-         color: #fff;
-         font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      .nav-link {
+        padding: 5px;
+        text-decoration: none;
+        cursor: pointer;
+        color: #fff;
       }
-      
-      #navLinks {
-         display: flex;
-         align-items: center;
-         width: fit-content;
-         
-         .nav-link {
-            padding: 8px 10px;
-            margin-left: 5px;
-            text-decoration: none;
-            cursor: pointer;
-            color: #fff;
-         }
-      }
-   }
+    }
+  }
 }
-

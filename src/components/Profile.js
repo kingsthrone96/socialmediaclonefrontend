@@ -11,10 +11,10 @@ function Profile({ currentUser, setUserState }) {
    if(!isLoggedIn) return <Redirect to="/signIn" />;
    return (
       <>
-      <Navbar />
-      <div id="profile" className="container">
-         <h1>Welcome to Profile Page {currentUser.name}</h1>
-      </div>
+         <Navbar />
+         <div id="profile" className="container">
+            <h1>Welcome to Profile Page {currentUser.name}</h1>
+         </div>
       </>
       
    )

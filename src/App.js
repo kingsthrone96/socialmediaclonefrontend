@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { HashRouter, Route} from "react-router-dom";
 import "./App.scss";
+import './helperClasses.scss';
 
 import SignUpForm from "./components/SignUpForm";
 import SignInForm from "./components/SignInForm";
