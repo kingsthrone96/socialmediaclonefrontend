@@ -3,19 +3,18 @@ import { Link, Redirect } from "react-router-dom";
 
 import "./styles/signUpForm.scss";
 import serverAPI from "./helpers/serverAPI";
-import UseAuth from './customHooks/UseAuth';
+import UseAuth from "./customHooks/UseAuth";
+import { ACTION } from "../Reducer";
 
 import TextField from "@material-ui/core/TextField";
 
-
-
-let body = {}
+let body = {};
 const onChange = (e = window.event) => {
   const { name, value } = e.target;
-  Object.assign(body, { ...body, [name]: value});
+  Object.assign(body, { ...body, [name]: value });
 };
 
-function SignUpForm({ userState, setUserState }) {
+function SignUpForm({ dispatch }) {
   const isLoggedIn = UseAuth();
   const [nameError, setNameError] = useState();
   const [emailError, setEmailError] = useState();
@@ -27,7 +26,7 @@ function SignUpForm({ userState, setUserState }) {
       const res = await fetch(serverAPI.userCreate, {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
       });
       const resData = await res.json();
       if (resData.clientError) {
@@ -35,7 +34,10 @@ function SignUpForm({ userState, setUserState }) {
         console.log(resData);
         throw new Error("Something went wrong");
       } else {
-        setUserState(resData);
+        dispatch({
+          type: ACTION.SET_USER_STATE,
+          payload: resData,
+        });
         console.log(resData);
         window.location.href = window.location.href + "signIn";
       }
@@ -59,7 +61,7 @@ function SignUpForm({ userState, setUserState }) {
     });
   };
 
-  if(isLoggedIn) return <Redirect to="/homefeed" />;
+  if (isLoggedIn) return <Redirect to="/homefeed" />;
   return (
     <div id="signUpForm">
       <div id="pageGreetings">

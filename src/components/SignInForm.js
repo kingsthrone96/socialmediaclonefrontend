@@ -1,46 +1,46 @@
 import React, { useState } from "react";
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect } from "react-router-dom";
 
 import "./styles/signInForm.scss";
 import serverAPI from "./helpers/serverAPI";
-import UseAuth from './customHooks/UseAuth';
+import { ACTION } from "../Reducer";
 
 import TextField from "@material-ui/core/TextField";
 
-
-let body = {}
+let body = {};
 const onChange = (e = window.event) => {
   const { name, value } = e.target;
-  Object.assign(body, { ...body, [name]: value});
+  Object.assign(body, { ...body, [name]: value });
 };
 
-function SignInForm({ userState, setUserState }) {
-  const loggedIn = UseAuth();
-  const [isLoggedIn, setIsLoggedIn] = useState(loggedIn);
+function SignInForm({ userState, dispatch }) {
   const [emailError, setEmailError] = useState();
   const [passwordError, setPasswordError] = useState();
 
-  const onSubmit = async(e = window.event) => {
+  const onSubmit = async (e = window.event) => {
     e.preventDefault();
     try {
       const res = await fetch(serverAPI.userLogin, {
         method: "POST",
-        headers: { "Content-Type" : "application/json; charset=utf-8"},
-        body: JSON.stringify(body)
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify(body),
       });
       const data = await res.json();
-      if(data.clientError) {
+      if (data.clientError) {
         handleValidationError(data.clientError);
         throw new Error("Something went wrong");
       } else {
         window.localStorage.setItem("authToken", data.token);
-        setUserState(data.currentUser);
-        setIsLoggedIn(true)
+        dispatch({
+          type: ACTION.SET_USER_STATE,
+          payload: data.currentUser,
+        });
+        dispatch({ type: ACTION.SET_LOGIN_STATUS, payload: true });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const handleValidationError = (errors) => {
     setEmailError();
@@ -54,7 +54,7 @@ function SignInForm({ userState, setUserState }) {
     });
   };
 
-  if(isLoggedIn) return <Redirect to="/homefeed" />;
+  if (userState.isLoggedIn) return <Redirect to="/homefeed" />;
   return (
     <div id="signInForm">
       <div id="pageForm">
@@ -65,7 +65,7 @@ function SignInForm({ userState, setUserState }) {
             id="email"
             label="Email"
             type="email"
-            defaultValue={userState.email}
+            defaultValue={userState.user.email}
             name="loginEmail"
             className="form-fields"
             helperText={emailError ? emailError.errMsg : ""}
@@ -87,7 +87,7 @@ function SignInForm({ userState, setUserState }) {
       </div>
       <div id="pageGreetings">
         <div id="pageGreetingContent">
-          <h1>Welcome {userState.name || ""}</h1>
+          <h1>Welcome {userState.user.name || ""}</h1>
           <p>
             The quick brown fox jumps over the lazy dog near the side of the
             river bank. The quick brown fox jumps over the lazy dog near the
