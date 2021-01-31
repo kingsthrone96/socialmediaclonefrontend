@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
-
 import "./styles/profile.scss";
+
+import { Context } from "../App";
 import Navbar from "./Navbar";
 
-function Profile({ userState, dispatch }) {
+function Profile() {
+  const { userState, dispatch } = useContext(Context);
   if (!userState.isLoggedIn) return <Redirect to="/signIn" />;
   return (
     <>

@@ -4,7 +4,6 @@ import { Redirect } from "react-router-dom";
 import "./styles/homefeed.scss";
 import serverAPI from "./helpers/serverAPI";
 import { fetchData } from "./helpers/helpersFunctions";
-import { ACTION } from "../Reducer";
 import { Context } from "../App";
 
 import Navbar from "./Navbar";

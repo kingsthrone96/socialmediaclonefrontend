@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 import "./styles/signInForm.scss";
 import serverAPI from "./helpers/serverAPI";
+import { Context } from "../App";
 import { ACTION } from "../Reducer";
 
 import TextField from "@material-ui/core/TextField";
@@ -13,7 +14,8 @@ const onChange = (e = window.event) => {
   Object.assign(body, { ...body, [name]: value });
 };
 
-function SignInForm({ userState, dispatch }) {
+function SignInForm() {
+  const { userState, dispatch, setLoginStatus } = useContext(Context);
   const [emailError, setEmailError] = useState();
   const [passwordError, setPasswordError] = useState();
 
@@ -35,7 +37,7 @@ function SignInForm({ userState, dispatch }) {
           type: ACTION.SET_USER_STATE,
           payload: data.currentUser,
         });
-        dispatch({ type: ACTION.SET_LOGIN_STATUS, payload: true });
+        dispatch(setLoginStatus(true));
       }
     } catch (error) {
       console.log(error);

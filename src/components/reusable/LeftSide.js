@@ -25,8 +25,7 @@ function LeftSide({ userState, dispatch }) {
         src="https://64.media.tumblr.com/d4102011d5324aef446396fa119a647b/b81278108cead628-50/s640x960/147ad505ebf0afbce920bcff13e81a33d4e1464a.jpg"
         className={classes.large}
       />
-      <h4>{userState.user.name}</h4>
-      <br />
+      <h4 id="profileName">{userState.user.name}</h4>
       <div className={classes.root}>
         <List component="nav" aria-label="main mailbox folders">
           <ListItem button>

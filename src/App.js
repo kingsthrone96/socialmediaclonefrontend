@@ -33,10 +33,7 @@ function App() {
           const { authorizationError, currentUser } = res;
           console.log("fetch fired");
           if (authorizationError) {
-            dispatch({
-              type: ACTION.SET_LOGIN_STATUS,
-              payload: false,
-            });
+            dispatch(setLoginStatus(false));
             window.localStorage.removeItem("authToken");
           } else {
             console.log(currentUser);
@@ -48,35 +45,28 @@ function App() {
         })
         .catch((err) => {
           console.log(err);
-          dispatch({
-            type: ACTION.SET_LOGIN_STATUS,
-            payload: false,
-          });
+          dispatch(setLoginStatus(false));
         });
     }
   }, [userState.isLoggedIn]);
   return (
-    <Context.Provider value={{ userState, dispatch, setLoginStatus }}>
+    <Context.Provider value={{ userState, dispatch, ACTION, setLoginStatus }}>
       <div className="App">
         <HashRouter>
           <Route exact path="/">
-            <SignUpForm dispatch={dispatch} />
+            <SignUpForm />
           </Route>
           <Route path="/signIn">
-            <SignInForm userState={userState} dispatch={dispatch} />
+            <SignInForm />
           </Route>
           <Route path="/homefeed">
-            <Homefeed
-              userState={userState}
-              dispatch={dispatch}
-              setLoginStatus={setLoginStatus}
-            />
+            <Homefeed />
           </Route>
           <Route path="/profile">
-            <Profile userState={userState} dispatch={dispatch} />
+            <Profile />
           </Route>
           <Route path="/chat">
-            <Chat userState={userState} dispatch={dispatch} />
+            <Chat />
           </Route>
         </HashRouter>
       </div>

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 import "./styles/signUpForm.scss";
 import serverAPI from "./helpers/serverAPI";
-import UseAuth from "./customHooks/UseAuth";
+import { Context } from "../App";
 import { ACTION } from "../Reducer";
 
 import TextField from "@material-ui/core/TextField";
@@ -14,8 +14,8 @@ const onChange = (e = window.event) => {
   Object.assign(body, { ...body, [name]: value });
 };
 
-function SignUpForm({ dispatch }) {
-  const isLoggedIn = UseAuth();
+function SignUpForm() {
+  const { userState, dispatch } = useContext(Context);
   const [nameError, setNameError] = useState();
   const [emailError, setEmailError] = useState();
   const [passwordError, setPasswordError] = useState();
@@ -61,7 +61,7 @@ function SignUpForm({ dispatch }) {
     });
   };
 
-  if (isLoggedIn) return <Redirect to="/homefeed" />;
+  if (userState.isLoggedIn) return <Redirect to="/homefeed" />;
   return (
     <div id="signUpForm">
       <div id="pageGreetings">
