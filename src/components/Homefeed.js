@@ -7,8 +7,8 @@ import { fetchData } from "./helpers/helpersFunctions";
 import { Context } from "../App";
 
 import Navbar from "./Navbar";
-import LeftSide from "./reusable/LeftSide";
-import PostArea from "./reusable/PostArea";
+import LeftSide from "./subComponents/LeftSide";
+import PostArea from "./subComponents/PostArea";
 
 function Homefeed() {
   const { userState, dispatch } = useContext(Context);

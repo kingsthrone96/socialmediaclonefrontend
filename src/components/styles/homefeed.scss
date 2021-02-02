@@ -20,19 +20,25 @@
     left: 300px;
     width: 60%;
 
-    .textArea {
-      resize: none;
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
+    form {
+      textarea {
+        resize: none;
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
 
-      &:focus {
-        outline: none;
+        &:focus {
+          outline: none;
+        }
+      }
+
+      #postBtns {
+        display: flex;
       }
     }
 
-    #postBtns {
-      display: flex;
+    #userPosts {
+      margin-top: 20px;
     }
   }
 }

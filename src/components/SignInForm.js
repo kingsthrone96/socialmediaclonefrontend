@@ -67,7 +67,6 @@ function SignInForm() {
             id="email"
             label="Email"
             type="email"
-            defaultValue={userState.user.email}
             name="loginEmail"
             className="form-fields"
             helperText={emailError ? emailError.errMsg : ""}
