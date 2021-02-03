@@ -2,11 +2,10 @@
 
 #signUpForm {
   display: flex;
-  position: fixed;
+  height: 100vh;
 
   #pageGreetings {
     width: 60vw;
-    height: 100vh;
     color: #fff;
     background-color: $primary-color;
 
