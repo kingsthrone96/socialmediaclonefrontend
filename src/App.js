@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, createContext } from "react";
+import React, { useState, useEffect, useReducer, createContext } from "react";
 import { HashRouter, Route } from "react-router-dom";
 import "./App.scss";
 import "./helperClasses.scss";
@@ -17,6 +17,7 @@ export const Context = createContext();
 
 function App() {
   const [userState, dispatch] = useReducer(reducer, initialState);
+  const [allUsersPosts, setAllUsersPosts] = useState([]);
   const setLoginStatus = (status) => ({
     type: ACTION.SET_LOGIN_STATUS,
     payload: status,
@@ -50,7 +51,16 @@ function App() {
     }
   }, [userState.isLoggedIn]);
   return (
-    <Context.Provider value={{ userState, dispatch, ACTION, setLoginStatus }}>
+    <Context.Provider
+      value={{
+        userState,
+        dispatch,
+        ACTION,
+        setLoginStatus,
+        allUsersPosts,
+        setAllUsersPosts,
+      }}
+    >
       <div className="App">
         <HashRouter>
           <Route exact path="/">

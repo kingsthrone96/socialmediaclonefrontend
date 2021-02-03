@@ -15,30 +15,47 @@
     }
   }
 
-  #postArea {
+  #middleArea {
     position: relative;
     left: 300px;
     width: 60%;
+    #postArea {
+      form {
+        textarea {
+          resize: none;
+          width: 100%;
+          padding: 10px;
+          border-radius: 5px;
 
-    form {
-      textarea {
-        resize: none;
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-
-        &:focus {
-          outline: none;
+          &:focus {
+            outline: none;
+          }
         }
-      }
 
-      #postBtns {
-        display: flex;
+        #postBtns {
+          display: flex;
+        }
       }
     }
 
     #userPosts {
       margin-top: 20px;
+
+      .postCard {
+        animation: animateOnPost;
+        animation-duration: 700ms;
+      }
+
+      @keyframes animateOnPost {
+        from {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0px);
+          opacity: 1;
+        }
+      }
     }
   }
 }

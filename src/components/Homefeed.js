@@ -9,6 +9,7 @@ import { Context } from "../App";
 import Navbar from "./Navbar";
 import LeftSide from "./subComponents/LeftSide";
 import PostArea from "./subComponents/PostArea";
+import AllUsersPosts from "./subComponents/AllUsersPosts";
 
 function Homefeed() {
   const { userState, dispatch } = useContext(Context);
@@ -22,7 +23,10 @@ function Homefeed() {
       <Navbar />
       <div id="homefeed" className="hc-container">
         <LeftSide userState={userState} dispatch={dispatch} />
-        <PostArea />
+        <div id="middleArea">
+          <PostArea />
+          <AllUsersPosts />
+        </div>
       </div>
     </>
   );
