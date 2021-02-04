@@ -12,10 +12,8 @@ import PostArea from "./subComponents/PostArea";
 import AllUsersPosts from "./subComponents/AllUsersPosts";
 
 function Homefeed() {
+  console.log("homefeed render counting");
   const { userState, dispatch } = useContext(Context);
-  useEffect(() => {
-    console.log("hello world");
-  }, []);
 
   if (!userState.isLoggedIn) return <Redirect to="/signIn" />;
   return (

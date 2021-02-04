@@ -31,6 +31,7 @@ function PostArea() {
   const { userState, dispatch, allUsersPosts, setAllUsersPosts } = useContext(
     Context
   );
+  console.log("all users post render counting");
 
   const isMounted = useRef(true);
 
@@ -80,7 +81,7 @@ function PostArea() {
                 component="img"
                 alt="Contemplative Reptile"
                 height=""
-                image="https://hddesktopwallpapers.in/wp-content/uploads/2015/09/bright-wallpapers.jpg"
+                image={post.photo}
                 title="Contemplative Reptile"
               />
             ) : (
