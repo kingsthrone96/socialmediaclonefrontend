@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -25,9 +25,14 @@ const useStyles = makeStyles((theme) => ({
 
 function UserPosts({ usersPosts }) {
   const classes = useStyles();
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    setPosts(usersPosts);
+  }, [usersPosts]);
   return (
     <div id="userPosts">
-      {usersPosts.map((post) => (
+      {posts.map((post) => (
         <Card className={`${classes.cardRoot} postCard`} key={post._id}>
           <CardHeader
             avatar={

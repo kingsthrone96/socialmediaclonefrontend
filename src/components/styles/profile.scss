@@ -1,8 +1,87 @@
+@import "../../App.scss";
 #profile {
   margin-top: 48px;
 
   #landingProfile {
     width: 100%;
     height: 400px;
+  }
+
+  #profileNavLinks {
+    background-color: $primary-color;
+    > ul {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .profile-nav-link {
+        list-style: none;
+        padding: 8px 15px;
+        color: #fff;
+        cursor: pointer;
+        transition: 200ms;
+
+        &:hover {
+          background-color: darken($color: $primary-color, $amount: 5);
+        }
+      }
+    }
+  }
+
+  #profileContent {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+
+    #profileContentLeftSide {
+      width: 40%;
+    }
+
+    #profileContentRightSide {
+      width: 59%;
+      float: right;
+
+      #postArea {
+        form {
+          textarea {
+            resize: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+
+            &:focus {
+              outline: none;
+            }
+          }
+
+          #previewImage {
+            width: 100px;
+          }
+
+          #postBtns {
+            display: flex;
+          }
+        }
+      }
+
+      #userPosts {
+        margin-top: 20px;
+
+        .postCard {
+          animation: animateOnPost;
+          animation-duration: 700ms;
+        }
+
+        @keyframes animateOnPost {
+          from {
+            transform: translateY(-20px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0px);
+            opacity: 1;
+          }
+        }
+      }
+    }
   }
 }

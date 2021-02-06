@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 function PostArea() {
   const classes = useStyles();
-  const { userState, setAllUsersPosts } = useContext(Context);
+  const { userState, dispatch, setAllUsersPosts, ACTION } = useContext(Context);
   const [bodyPost, setBodyPost] = useState({ post: {} });
   const postTextArea = useRef(null);
   const [disabled, setDisabled] = useState(true);
@@ -79,6 +79,7 @@ function PostArea() {
         console.log(resData);
         setDisabled(true);
         setAllUsersPosts((prev) => [resData.newPost, ...prev]);
+        dispatch({ type: ACTION.SUBMIT_POST, payload: resData.newPost });
       } catch (error) {
         console.log(error);
       }
