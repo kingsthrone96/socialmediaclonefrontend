@@ -2,6 +2,7 @@ const ACTION = {
   SET_USER_STATE: "setUserState",
   SET_LOGIN_STATUS: "setLoginStatus",
   SUBMIT_POST: "submitPost",
+  CHANGE_PROFILE_PICTURES: "changeProfilePictures",
 };
 
 function UseAuth() {
@@ -38,6 +39,18 @@ const reducer = (state, action) => {
         user: {
           ...state.user,
           posts: [action.payload, ...state.user.posts],
+        },
+      };
+
+    case ACTION.CHANGE_PROFILE_PICTURES:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          profile: {
+            ...state.user.profile,
+            [action.payload.imageFor]: action.payload.imagePath,
+          },
         },
       };
     default:

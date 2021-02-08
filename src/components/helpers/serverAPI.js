@@ -6,6 +6,7 @@ const endpoints = {
   homefeedData: `${baseURL}/homepage`,
   postSomething: `${baseURL}/postSomething`,
   getAllUsersPosts: `${baseURL}/getAllUsersPosts`,
+  changeProfilePictures: `${baseURL}/changeProfilePictures`,
 };
 
 export default endpoints;

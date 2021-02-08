@@ -3,6 +3,10 @@ import { Redirect } from "react-router-dom";
 import "./styles/profile.scss";
 
 import { makeStyles } from "@material-ui/core/styles";
+import { ACTION } from "../Reducer";
+import serverAPI from "./helpers/serverAPI";
+import { uploadImageToFirebase } from "./helpers/uploadImage";
+import { createMuiTheme } from "@material-ui/core/styles";
 import { Context } from "../App";
 import Navbar from "./Navbar";
 import PostArea from "./subComponents/PostArea";
@@ -16,11 +20,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import InboxIcon from "@material-ui/icons/Inbox";
 import DraftsIcon from "@material-ui/icons/Drafts";
+import Button from "@material-ui/core/Button";
+import purple from "@material-ui/core/colors/purple";
 
 const useStyles = makeStyles((theme) => ({
   landingProfile: {
-    backgroundImage:
-      'linear-gradient(transparent, #222), url("https://th.bing.com/th/id/R2434a84085041c46207fb2068c64b90d?rik=4HxE4kTq0XHKnA&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2fe%2f3%2f2%2f610334.jpg&ehk=1RX14puOJpbNFeA%2f49K8e0J2fXQjC4jeP91kLNZsBO4%3d&risl=&pid=ImgRaw")',
     backgroundPosition: "center center",
     backgroundSize: "cover",
   },
@@ -39,53 +43,107 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(25),
   },
 
-  leftSideRoot: {
+  profileContent: {
     position: "fixed",
+    top: "68px",
+    maxHeight: "98vh",
   },
 
-  leftSideRootOnFixed: {
-    float: "right",
+  button: {
+    backgroundColor: purple[500],
+    color: "#fff",
   },
 }));
 
 const LeftSide = () => {
-  const [previewImage, setPreviewImage] = useState();
   const classes = useStyles();
-  const [positionFixed, setPositionFixed] = useState(null);
+  const [image, setImage] = useState();
+  const [imageFor, setImageFor] = useState();
+  const { userState, dispatch } = useContext(Context);
 
-  useEffect(() => {
-    window.onscroll = () => {
-      if (window.scrollY >= 463) {
-        setPositionFixed(true);
-        console.log(positionFixed);
-      } else setPositionFixed(null);
-    };
+  const handleChangeImageFile = (e, imgFor) => {
+    console.log("handleChange event fired");
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+      setImageFor(imgFor);
+      console.log(e.target.files[0]);
+    } else {
+      console.log("no file");
+    }
+  };
 
-    return () =>
-      window.removeEventListener("scroll", (ev) => {
-        console.log("event listner removed");
+  const saveChange = async (url) => {
+    try {
+      const res = await fetch(serverAPI.changeProfilePictures, {
+        method: "POST",
+        headers: {
+          authToken: window.localStorage.authToken,
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify({
+          image: {
+            imageFor,
+            imagePath: url,
+          },
+        }),
       });
-  }, [positionFixed]);
+
+      const resData = await res.json();
+      dispatch({ type: ACTION.CHANGE_PROFILE_PICTURES, payload: resData });
+      setImageFor();
+      setImage();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div
-      className={positionFixed ? classes.leftSideRoot : ""}
-      id="profileContentLeftSide"
-    >
+    <div id="profileContentLeftSide">
       <List component="nav" aria-label="main mailbox folders">
-        <ListItem button>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Inbox" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Drafts" />
-        </ListItem>
+        <label htmlFor="selectProfileImg">
+          <ListItem button>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Change Profile Picture" />
+          </ListItem>
+        </label>
+        <input
+          type="file"
+          id="selectProfileImg"
+          accept=".png, .jpg, .jpeg"
+          onChange={(e) => handleChangeImageFile(e, "currentProfilePicture")}
+          style={{ display: "none" }}
+        />
+        <label htmlFor="selectBgImg">
+          <ListItem button>
+            <ListItemIcon>
+              <DraftsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Change background Picture" />
+          </ListItem>
+        </label>
+        <input
+          type="file"
+          id="selectBgImg"
+          accept=".png, .jpg, .jpeg"
+          onChange={(e) => handleChangeImageFile(e, "currentBackgroundPicture")}
+          style={{ display: "none" }}
+        />
       </List>
       <Divider />
+      {image && (
+        <div id="profilePreviewImage">
+          <img src={URL.createObjectURL(image)} alt="preview" width="100%" />
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={() => uploadImageToFirebase(userState, image, saveChange)}
+          >
+            Save
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
@@ -97,6 +155,11 @@ function Profile() {
 
   useEffect(() => {
     if (userState.user.posts) setMyPosts(userState.user.posts);
+    // window.onscroll = () => {
+    //   if(window.scrollY >= 437) {
+
+    //   }
+    // }
   }, [userState.user.posts]);
 
   if (!userState.isLoggedIn) return <Redirect to="/signIn" />;
@@ -104,11 +167,25 @@ function Profile() {
     <>
       <Navbar />
       <div id="profile" className="hc-container">
-        <div id="landingProfile" className={classes.landingProfile}>
+        <div
+          id="landingProfile"
+          className={classes.landingProfile}
+          style={{
+            backgroundImage: userState.user.profile
+              ? `url('${userState.user.profile.currentBackgroundPicture}')`
+              : "",
+            backgroundPosition: "center center",
+            backgroundSize: "cover",
+          }}
+        >
           <div className={classes.avatarContainer}>
             <Avatar
               alt={userState.user.name}
-              src="https://www.abs-cbn.com/download?type=image&include=one&file=https://data-corporate.abs-cbn.com/corp/medialibrary/dotcom/narrowcast%20metro%20pr/seo%20ye-ji%20tops%20metro-style%27s%20most%20beautiful%20korean%20actresses%20poll.jpg?ext=.jpg"
+              src={
+                userState.user.profile
+                  ? userState.user.profile.currentProfilePicture
+                  : ""
+              }
               className={classes.avatar}
             />
             <h1 id="profileName" className="hc-text-white">
