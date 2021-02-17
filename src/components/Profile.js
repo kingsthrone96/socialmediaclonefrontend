@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useMemo, useRef } from "react";
+import React, { useState, useContext, useEffect} from "react";
 import { Redirect } from "react-router-dom";
 import "./styles/profile.scss";
 
@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { ACTION } from "../Reducer";
 import serverAPI from "./helpers/serverAPI";
 import { uploadImageToFirebase } from "./helpers/uploadImage";
-import { createMuiTheme } from "@material-ui/core/styles";
+
 import { Context } from "../App";
 import Navbar from "./Navbar";
 import PostArea from "./subComponents/PostArea";
@@ -56,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LeftSide = () => {
-  const classes = useStyles();
   const [image, setImage] = useState();
   const [imageFor, setImageFor] = useState();
   const { userState, dispatch } = useContext(Context);
@@ -150,7 +149,7 @@ const LeftSide = () => {
 
 function Profile() {
   const classes = useStyles();
-  const { userState, dispatch } = useContext(Context);
+  const { userState} = useContext(Context);
   const [myPosts, setMyPosts] = useState([]);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, {useContext } from "react";
 import { Redirect } from "react-router-dom";
 import "./styles/chat.scss";
 
@@ -6,7 +6,7 @@ import { Context } from "../App";
 import Navbar from "./Navbar";
 
 function Chat() {
-  const { userState, dispatch } = useContext(Context);
+  const { userState} = useContext(Context);
   if (!userState.isLoggedIn) return <Redirect to="/signIn" />;
   return (
     <>

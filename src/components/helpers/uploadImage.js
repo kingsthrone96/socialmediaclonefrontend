@@ -11,7 +11,6 @@ const generateRandomString = () => {
 };
 
 const uploadImageToFirebase = (userState, image, submit) => {
-  let firebaseUrl = "";
   const randString = generateRandomString(image);
   const imageName = randString + "." + image.type.split("/")[1];
   const uploadTask = storage

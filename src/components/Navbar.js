@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, {useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Context } from "../App";
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Navbar() {
-  const { userState, dispatch, setLoginStatus } = useContext(Context);
+  const {dispatch, setLoginStatus } = useContext(Context);
   const classes = useStyles();
 
   const logOut = () => {

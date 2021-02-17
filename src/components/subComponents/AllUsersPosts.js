@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
+import React, {useEffect, useContext, useMemo, useRef } from "react";
 
 import { Context } from "../../App";
 import serverAPI from "../helpers/serverAPI";
 import UserPosts from "./UserPosts";
 
 function PostArea() {
-  const { userState, dispatch, allUsersPosts, setAllUsersPosts } = useContext(
+  const {allUsersPosts, setAllUsersPosts } = useContext(
     Context
   );
 
