@@ -36,8 +36,9 @@ function UserPosts({ usersPosts }) {
         <Card className={`${classes.cardRoot} postCard`} key={post._id}>
           <CardHeader
             avatar={
-              <Avatar src="https://th.bing.com/th/id/R94294ba1011d000c39b9a18d3f626a6a?rik=PjDl2mRHB%2fSCAQ&riu=http%3a%2f%2fstatic.muctim.com.vn%2fdata%2fteen360%2fpictures%2f2020%2f07%2f24%2f1595602853_its-okay-to-not-be-okay-netflix-seo-ye-ji-scaled-1593568786475819819524.jpg&ehk=o8EqorTP%2fXvuFkIwJ7JEkdxsanPLE37x2z%2bgiNFcv%2bc%3d&risl=&pid=ImgRaw">
-                R
+              <Avatar src={post.ref.ref_pic || ''}>
+                
+                {post.ref.ref_name[0].toLocaleUpperCase()}
               </Avatar>
             }
             action={

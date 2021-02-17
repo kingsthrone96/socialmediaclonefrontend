@@ -34,7 +34,7 @@ function Navbar() {
       <div className="hc-container">
         <div id="brandLogo">
           <Link id="logo" to="/homefeed">
-            BrandLogo
+            KeepTrack
           </Link>
         </div>
         <ul id="navLinks">
